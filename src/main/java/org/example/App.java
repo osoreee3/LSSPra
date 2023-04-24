@@ -12,7 +12,7 @@ public class App {
     Container.init();
 
     while (true) {
-      System.out.println("회원가입 / 로그인 / 이동 / 종료");
+      System.out.println("회원가입 / 로그인 / 이동 / 게시판 / 종료");
       System.out.printf("명령어) ");
       String cmd = Container.scanner.nextLine();
 
@@ -66,7 +66,10 @@ public class App {
       Container.memberController.whoami();
     } else if (cmd.equals("이동")) {
       Container.moveController.move();
-    } else if (cmd.equals("system exit")) {
+    }else if (cmd.equals("게시판")) {
+      Container.mainArticleController.run();
+    }
+    else if (cmd.equals("system exit")) {
       System.out.println("시스템 종료");
       System.exit(0);
     } else {

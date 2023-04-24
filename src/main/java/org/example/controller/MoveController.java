@@ -19,7 +19,7 @@ public class MoveController {
             } else if (cmd.equals("공지사항")) {
                 System.out.println("공지사항으로 이동합니다");
                 System.out.println("-".repeat(30));
-                Container.mainArticleController.run();
+                Container.mainArticleController();
             } else if (cmd.equals("Q&A")) {
                 System.out.println("Q&A로 이동합니다");
                 System.out.println("-".repeat(30));

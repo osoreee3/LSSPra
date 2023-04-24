@@ -46,5 +46,13 @@ public class Container {
 
     scanner = new Scanner(System.in);
     session = new Session();
+
+  }
+  public static Scanner getsc(){
+    return scanner;
+  }
+
+
+  public static void mainArticleController() {
   }
 }
