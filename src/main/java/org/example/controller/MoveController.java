@@ -11,7 +11,7 @@ public class MoveController {
             if (cmd.equals("게시판")) {
                 System.out.println("게시판으로 이동합니다");
                 System.out.println("-".repeat(30));
-                Container.articleController.run();
+                Container.mainArticleController.run();
             } else if (cmd.equals("마이 스케줄러")) {
                 System.out.println("마이 스케줄러로 이동합니다");
                 System.out.println("-".repeat(30));
@@ -19,7 +19,7 @@ public class MoveController {
             } else if (cmd.equals("공지사항")) {
                 System.out.println("공지사항으로 이동합니다");
                 System.out.println("-".repeat(30));
-                Container.mainArticleController();
+                Container.mainArticleController.run();
             } else if (cmd.equals("Q&A")) {
                 System.out.println("Q&A로 이동합니다");
                 System.out.println("-".repeat(30));

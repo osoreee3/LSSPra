@@ -167,9 +167,9 @@ public class ArticleController {
             System.out.printf("게시판 명령어: ");
             String command = Container.scanner.nextLine();
             if (command.equals("게시판 보기")) {
-                articleController.showList();
+                ArticleController.boardList();
             } else if (command.equals("상세보기")) {
-                articleController.showDetail();
+                ArticleController.Findboard();
             } else if (command.equals("글쓰기")) {
                 articleController.write();
             } else if (command.equals("돌아가기")) {
@@ -179,9 +179,9 @@ public class ArticleController {
     }
 
     public static void boardList() {
-        System.out.println("생성날자 / 수정날자 / 제목 / 아이디 / 내용 / 추천수 ");
+        System.out.println("글번호 / 제목 / 등록날짜");
         System.out.println("-".repeat(30));
-
+// 분류 title 제목 body / regDate
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -199,7 +199,7 @@ public class ArticleController {
 
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery(sql);
-
+            int id = 1;
             Date now = null;
             Date update = null;
             int memberId = 0;
@@ -208,6 +208,7 @@ public class ArticleController {
             int hit = 0;
 
             while (rs.next()) {
+                id =  rs.getInt("id");
                 now = rs.getDate("regDate");
                 update = rs.getDate("updateDate");
                 title = rs.getString("title");
@@ -215,8 +216,7 @@ public class ArticleController {
                 body = rs.getString("body");
                 hit = rs.getInt("hit");
                 count++;
-                System.out.println(now + " / " + update + " / " + title +
-                        " / " + memberId + " / " + body + " / " + hit);
+                System.out.println(id + " / " + title + " / " + body + " / " + now);
             }
 
         } catch (SQLException e) {
@@ -227,14 +227,15 @@ public class ArticleController {
 
         System.out.println("총 등록된 ID 갯수" + count);
     }
-//lll
+
+    //lll
     public static void Findboard() {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        System.out.printf("아이디 : ");
-        int memberId = Container.getsc().nextInt();
+        System.out.printf("글번호 : ");
+        int id = Container.getsc().nextInt();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -244,25 +245,27 @@ public class ArticleController {
             conn = DriverManager.getConnection(url, "root", "");
 
             String sql = "SELECT * FROM article";
-            sql += String.format(" WHERE memberId = %d", memberId);
-
+            sql += " WHERE id = ?";
             pstmt = conn.prepareStatement(sql);
-            rs = pstmt.executeQuery(sql);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
 
             if (!rs.next()) {
                 System.out.println("아이디가 없습니다");
-            }
 
-
-            while (rs.next()) {
-                Date now = rs.getDate("regDate");
-                Date update = rs.getDate("updateDate");
+            } else {
                 String title = rs.getString("title");
+                System.out.println("제목 : " + title);
+                System.out.println("=".repeat(30));
+                System.out.println("");
                 String body = rs.getString("body");
-                int hit = rs.getInt("hit");
-
-                System.out.println(now + " / " + update + " / " + title +
-                        " / " + memberId + " / " + body + " / " + hit);
+                System.out.println(body);
+                System.out.println("");
+                System.out.println("");
+                System.out.printf("수정");
+                System.out.printf(" ".repeat(23));
+                System.out.println("삭제");
+                System.out.println("=".repeat(30));
             }
 
         } catch (SQLException e) {

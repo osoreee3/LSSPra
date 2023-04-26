@@ -17,19 +17,16 @@ import java.util.List;
 public class MainArticleController {
     static List<Article_board> board = new ArrayList<>();
 
-    public void run() {
-        article();
-    }
 
-    public void article() {
+    public void run() {
         Date regDate = new Date();
         Date updateDate = new Date();
-        int hit = 1;
+        int hit = 0;
         while (true) {
-            System.out.println("게시판 / 종료 / 상세보기 / 게시판목록");
+            System.out.println("게시판 보기 / 상세보기 / 글쓰기 / 돌아가기");
             System.out.printf("명령어) ");
             String command = Container.getsc().nextLine().trim();
-            if (command.equals("게시판")) {
+            if (command.equals("글쓰기")) {
                 System.out.printf("제목 : ");
                 String title = Container.getsc().nextLine().trim();
                 System.out.printf("내용 : ");
@@ -37,17 +34,15 @@ public class MainArticleController {
                 System.out.printf("유저이름 : ");
                 int memberId = Container.getsc().nextInt();
                 board.add(new Article_board(regDate, updateDate, title, memberId, body, hit));
-
                 insertDb(regDate, updateDate, title, memberId, body, hit);
-                hit++;
-            } else if (command.equals("종료")) {
-                break;
+            } else if (command.equals("돌아가기")) {
+                Container.moveController.move();
 
             } else if (command.equals("상세보기")) {
                 ArticleController.Findboard();
                 break;
             }
-            else if(command.equals("게시판목록")){
+            else if(command.equals("게시판 보기")){
                 ArticleController.boardList();
                 break;
             }
